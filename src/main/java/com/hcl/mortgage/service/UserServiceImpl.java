@@ -2,7 +2,6 @@ package com.hcl.mortgage.service;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Base64;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import com.hcl.mortgage.dto.LoginDetailsDto;
 import com.hcl.mortgage.dto.LoginDto;
 import com.hcl.mortgage.entity.Customer;
 import com.hcl.mortgage.repository.CustomerRepository;
-import com.hcl.mortgage.util.MortgageConstants;
 
 /**
  * @author Lakshmi
@@ -33,7 +31,7 @@ public class UserServiceImpl implements UserService {
 	 * @param LoginDto
 	 * @return LoginDetailsDto
 	 */
-	public LoginDetailsDto login(LoginDto loginDto) {
+	public LoginDetailsDto login(LoginDto loginDto) { 
 		LOGGER.debug("UserServiceImpl login()");
 		LoginDetailsDto loginResponseDto = null;
 		// Base64.Encoder encoder = Base64.getEncoder();
@@ -53,7 +51,6 @@ public class UserServiceImpl implements UserService {
 			loginResponseDto.setStatusCode(200);
 			loginResponseDto.setMessage("login succsess");
 //			loginResponseDto.setMessage(MortgageConstants.LOGIN_SUCCESS);
-
 		}
 		return loginResponseDto;
 	}

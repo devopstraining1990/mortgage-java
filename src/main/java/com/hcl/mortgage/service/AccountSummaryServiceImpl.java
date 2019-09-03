@@ -1,5 +1,6 @@
 package com.hcl.mortgage.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.mortgage.dto.AccountSummaryResponse;
+import com.hcl.mortgage.entity.Account;
 import com.hcl.mortgage.exception.MortgageException;
 import com.hcl.mortgage.repository.AccountRepository;
 
@@ -24,10 +26,25 @@ public class AccountSummaryServiceImpl implements AccountSummaryService {
 
 		logger.info("Inside AccountSummaryServiceImpl customerId:{}", customerId);
 
-		List<AccountSummaryResponse> accountSummaryList = accountRepository.findByCustomerId(customerId);
+		List<Account> accountsList = accountRepository.findByCustomerId(customerId);
+		AccountSummaryResponse accountSummaryResponse = null;
 
-		if (accountSummaryList != null) {
-			return accountSummaryList;
+		List<AccountSummaryResponse> accountSummaryResponseList = new ArrayList<>();
+
+		if (!(accountsList.isEmpty())) {
+
+			for (Account account : accountsList) {
+
+				accountSummaryResponse = new AccountSummaryResponse();
+				accountSummaryResponse.setAccountId(account.getAccountId());
+				accountSummaryResponse.setAccountNumber(account.getAccountNumber());
+				accountSummaryResponse.setAccountType(account.getAccountType());
+				accountSummaryResponse.setBalance(account.getBalance());
+
+				accountSummaryResponseList.add(accountSummaryResponse);
+
+			}
+			return accountSummaryResponseList;
 
 		}
 
