@@ -133,7 +133,7 @@ public class MortgageServiceImpl implements IMortgageService {
 											"Mortgage Account Number: "+mortgageAccount.getAccountNumber()+"/n"+
 											"Login Id :"+customer.getLoginId()+"\n"+"Password :"+customer.getPassword();
 
-						emailSender.sendOtp("mplnarasimham@gmail.com", "accounnt details", bodyMessage);
+						emailSender.sendOtp(mortgageDto.getEmail(), "accounnt details", bodyMessage);
 						mortgageDetailsDto.setTransactionAccountNumber(transactionalAccount.getAccountNumber());
 						mortgageDetailsDto.setMortgageAccountNumber(mortgageAccount.getAccountNumber());
 						mortgageDetailsDto.setLoginId(customer.getLoginId());
@@ -221,7 +221,7 @@ public class MortgageServiceImpl implements IMortgageService {
 		return accountRepository.findByCustomerIdAndAccountType(customerId, accountType);
 
 	}
-	@Scheduled(fixedRate =10000)
+	@Scheduled(fixedRate =60000)
 	public void testSchedule() {
 		batchProcess();
 	}

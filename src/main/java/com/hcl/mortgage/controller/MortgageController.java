@@ -24,7 +24,7 @@ public class MortgageController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MortgageServiceImpl.class);
 	
-	@Autowired
+	@Autowired 
 	IMortgageService mortgageService;
 	
 	/**

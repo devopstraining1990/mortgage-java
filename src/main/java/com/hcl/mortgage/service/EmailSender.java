@@ -14,13 +14,9 @@ public class EmailSender {
 	
 	public static final Logger LOGGER = LoggerFactory.getLogger(EmailSender.class);
 
+	@Autowired
 	private JavaMailSender javaMailSender;
 
-	
-	@Autowired
-	public EmailSender(JavaMailSender javaMailSender) {
-	 this.javaMailSender = javaMailSender;
-	}
 
 	public String sendOtp(String mailId, String headMessage, String bodyMessage) {
 

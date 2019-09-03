@@ -175,6 +175,29 @@ public class MortgageServiceImplTest {
 
 	}
 
+	
+	@Test
+	public void batchProcess4() {
+		
+//		account2.setBalance(-1000d);
+		account.setBalance(-1000d);
+		
+
+		Mockito.when(accountRepository.findByCustomerIdAndAccountType(Mockito.anyInt(), Mockito.any())).thenReturn(account);
+
+		Mockito.when(accountRepository.findAll()).thenReturn(accountList);
+		Mockito.when(accountRepository.save(account)).thenReturn(account); 
+		Mockito.when(accountRepository.save(account)).thenReturn(account);
+		
+		Mockito.when(transactionRepository.save(transaction)).thenReturn(transaction);
+		Mockito.when(transactionRepository.save(transaction)).thenReturn(transaction);
+		 
+		String actual = mortgageServiceImpl.batchProcess();
+		
+		Assert.assertEquals("Monthly Batch Updated Successfully.", actual);
+
+	}
+
 
 
 	@Test
