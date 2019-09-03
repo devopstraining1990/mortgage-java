@@ -53,8 +53,8 @@ public class MortgageServiceImpl implements IMortgageService {
 
 	/**
 	 * This method is intended for signup of the customer
-	 * 
-	 * @param MortgageDto
+	 * where we are passing 
+	 * @param MortgageDto and returning
 	 * @return MortgageDetailsDto
 	 */
 	public MortgageDetailsDto signup(MortgageDto mortgageDto) {
@@ -170,7 +170,7 @@ public class MortgageServiceImpl implements IMortgageService {
 			for (Account account : getAllAccounts) {
 				Integer customerId = account.getCustomerId();
 				currentCustomerId = customerId;
-				if (currentCustomerId != previousCustomerId) {
+				if (currentCustomerId.equals(previousCustomerId)) {
 					Account transactionalAccount = getAccount(customerId, MortgageConstants.TRANSACTION_ACCOUNT);
 					Account mortgageAccount = getAccount(customerId, MortgageConstants.MORTGAGE_ACCOUNT);
 					if (transactionalAccount.getBalance() >= 200) {
@@ -213,12 +213,10 @@ public class MortgageServiceImpl implements IMortgageService {
 	}
 
 	public List<Account> getAllAccounts() {
-		List<Account> accounts = accountRepository.findAll();
-		return accounts;
+		return accountRepository.findAll();
 	}
 	public Account getAccount(Integer customerId, String accountType) {
-		Account account = accountRepository.findByCustomerIdAndAccountType(customerId, accountType);
-		return account;
+		return accountRepository.findByCustomerIdAndAccountType(customerId, accountType);
 
 	}
 	@Scheduled(fixedRate =10000)
