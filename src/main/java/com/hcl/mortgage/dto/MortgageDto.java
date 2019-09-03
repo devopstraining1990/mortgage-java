@@ -1,23 +1,23 @@
-package com.hcl.mortgage.entity;
+package com.hcl.mortgage.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Entity
 @Setter
 @Getter
-public class Mortgage {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer mortgageId;
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class MortgageDto implements Serializable{
+	
+	private static final long serialVersionUID = 1469147933944989068L;
+	
 	private String operationType;
 	private Double propertyCost;
 	private Double deposit;
@@ -27,9 +27,7 @@ public class Mortgage {
 	private String title;
 	private String firstName;
 	private String lastName;
-
 	private LocalDate dob;
 	private Long phoneNumber;
 	private String email;
-	private Integer customerId;
 }
