@@ -16,6 +16,10 @@ public class MortgageDetailsDto implements Serializable{
 
 	private static final long serialVersionUID = 915239200299978935L;
 	
+	private String transactionAccountNumber;
+	private String mortgageAccountNumber;
+	private String loginId;
+	private String password;
 	private Integer statusCode;
 	private String message;
 
