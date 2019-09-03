@@ -7,12 +7,14 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.mortgage.dto.LoginDetailsDto;
 import com.hcl.mortgage.dto.LoginDto;
 import com.hcl.mortgage.entity.Customer;
-import com.hcl.parking.util.ParkingConstants;
+import com.hcl.mortgage.repository.CustomerRepository;
+import com.hcl.mortgage.util.MortgageConstants;
 
 /**
  * @author Lakshmi
@@ -22,12 +24,8 @@ public class UserServiceImpl implements UserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-	/**
-	 * This method is intended for registration of the user
-	 * 
-	 * @param UserDto
-	 * @return UserDetailsDto
-	 */
+	@Autowired
+	CustomerRepository customerRepository;
 
 	/**
 	 * This method is intended for login of the user
@@ -38,22 +36,21 @@ public class UserServiceImpl implements UserService {
 	public LoginDetailsDto login(LoginDto loginDto) {
 		LOGGER.debug("UserServiceImpl login()");
 		LoginDetailsDto loginResponseDto = null;
-		Base64.Encoder encoder = Base64.getEncoder();
-		String password = encoder.encodeToString(loginDto.getPassword().getBytes());
-		List<Customer> customer = customerRepository.findByLoginIdAndPassword(loginDto.getEmail(), password);
-		if (users.isEmpty()) {
+		// Base64.Encoder encoder = Base64.getEncoder();
+		// String password = encoder.encodeToString(loginDto.getPassword().getBytes());
+
+		List<Customer> customer = customerRepository.findByLoginIdAndPassword(loginDto.getLoginId(),
+				loginDto.getPassword());
+		if (customer.isEmpty()) {
 			loginResponseDto = new LoginDetailsDto();
 			loginResponseDto.setStatusCode(401);
-			loginResponseDto.setMessage(ParkingConstants.LOGIN_FAILURE);
+			loginResponseDto.setMessage(MortgageConstants.LOGIN_FAILURE);
 		} else {
-			
-
+			Customer customers = customer.get(0);
 			loginResponseDto = new LoginDetailsDto();
-			loginResponseDto.setUserId(user.getUserId());
-			loginResponseDto.setUserName(user.getUserName());
-			loginResponseDto.setRoleType(role.get().getRoleType());
+			loginResponseDto.setCustomerId(customers.getCustomerId());
 			loginResponseDto.setStatusCode(200);
-			loginResponseDto.setMessage(ParkingConstants.LOGIN_SUCCESS);
+			loginResponseDto.setMessage(MortgageConstants.LOGIN_SUCCESS);
 
 		}
 		return loginResponseDto;
