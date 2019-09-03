@@ -1,5 +1,9 @@
 package com.hcl.mortgage.util;
 public final class MortgageConstants {
+	
+	private MortgageConstants() {
+		
+	}
 	public static final String MORTGAGE_APPROVED_MESSAGE = "Congratulations, your mortgage has been granted.";
 	public static final String CUSTOMER_AGE_MINIMUM_MESSAGE = "You are not eligible for this Loan age should be >18";
 	public static final String EMAIL_VALIDATION_MESSAGE = "Please Enter Valid Email and Email Conform Email Should be Same.";
