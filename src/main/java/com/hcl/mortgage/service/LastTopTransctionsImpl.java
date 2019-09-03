@@ -1,7 +1,10 @@
 package com.hcl.mortgage.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +26,14 @@ public class LastTopTransctionsImpl implements LastTopTransctions {
 		List<Transaction> transactions = transactionRepository.findByAccountNumber(accountNumber);
 
 		
+		 List<Transaction> sortedList = transactions.stream()
+					.sorted(Comparator.comparingInt(Transaction::getTransactionId))
+					.collect(Collectors.toList());
+			Collections.reverse(sortedList);
 		
 		List<LastTrasactionResponseDto> lastTrasactionResponseDtoList=new ArrayList<>();
 		
-		
-		for (Transaction transaction : transactions) {
+		for (Transaction transaction : sortedList) {
 			
 			LastTrasactionResponseDto lastTrasactionResponseDto = new LastTrasactionResponseDto();
 			
