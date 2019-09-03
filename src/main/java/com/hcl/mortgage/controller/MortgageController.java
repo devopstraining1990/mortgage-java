@@ -28,7 +28,7 @@ public class MortgageController {
 	public ResponseEntity<MortgageDetailsDto> signup(@RequestBody MortgageDto mortgageDto){
 		LOGGER.debug("MortgageController:createMortgage");
 		MortgageDetailsDto response = mortgageService.signup(mortgageDto);
-		return new ResponseEntity<MortgageDetailsDto>(response,HttpStatus.CREATED);
+		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
 	
 	
