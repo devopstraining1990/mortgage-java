@@ -129,46 +129,22 @@ public class MortgageServiceImplTest {
 		Assert.assertEquals("Monthly Batch Updated Successfully.", actual);
 
 	}
- 
+
 	@Test
 	public void batchProcess2() {
 		
 		account2.setBalance(-1000d);
 		account.setBalance(-1000d);
-		
-		account.setCustomerId(0);
 
 		Mockito.when(accountRepository.findByCustomerIdAndAccountType(Mockito.anyInt(), Mockito.any())).thenReturn(account);
 
 		Mockito.when(accountRepository.findAll()).thenReturn(accountList);
 		Mockito.when(accountRepository.save(account)).thenReturn(account);
-		Mockito.when(accountRepository.save(account)).thenReturn(account);
-		
-		Mockito.when(transactionRepository.save(transaction)).thenReturn(transaction);
-		Mockito.when(transactionRepository.save(transaction)).thenReturn(transaction);
-		
-		String actual = mortgageServiceImpl.batchProcess();
-		
-		Assert.assertEquals("Monthly Batch Updated Successfully.", actual);
-
-	}
-
-	@Test
-	public void batchProcess3() {
-		
-		account2.setBalance(-1000d);
-		account.setBalance(1000d);
-		
-
-		Mockito.when(accountRepository.findByCustomerIdAndAccountType(Mockito.anyInt(), Mockito.any())).thenReturn(account);
-
-		Mockito.when(accountRepository.findAll()).thenReturn(accountList);
-		Mockito.when(accountRepository.save(account)).thenReturn(account); 
 		Mockito.when(accountRepository.save(account2)).thenReturn(account2);
 		
 		Mockito.when(transactionRepository.save(transaction)).thenReturn(transaction);
 		Mockito.when(transactionRepository.save(transaction2)).thenReturn(transaction2);
-		 
+		
 		String actual = mortgageServiceImpl.batchProcess();
 		
 		Assert.assertEquals("Monthly Batch Updated Successfully.", actual);
