@@ -69,7 +69,7 @@ public class MortgageServiceImpl implements IMortgageService {
 		MortgageDetailsDto mortgageDetailsDto = null;
 
 		LocalDate birthDay = mortgageDto.getDob();
-
+		
 		if (mortgageDto.getPropertyCost() >= 100000 && mortgageDto.getDeposit() > 0) {
 			if (validPhoneNumber(mortgageDto.getPhoneNumber())) {
 				if (emailValidation(mortgageDto.getEmail())) {
