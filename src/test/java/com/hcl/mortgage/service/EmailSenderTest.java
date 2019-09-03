@@ -13,11 +13,4 @@ public class EmailSenderTest {
 	JavaMailSender mailSender;
 	
 
-	@Test
-	public void testSendOtp() {
-//		emailSender.sendOtp("sairam.cse6@gmail.com", "sample", "message");
-//	Mockito.doNothing().when(mailSender.createMimeMessage());
-		emailSender.sendOtp("sairam.cse6@gmail.com", "sample", "message");
-	}
-
 }
