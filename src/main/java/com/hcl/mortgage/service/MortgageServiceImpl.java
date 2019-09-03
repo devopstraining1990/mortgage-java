@@ -3,6 +3,7 @@ package com.hcl.mortgage.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.hcl.mortgage.dto.MortgageDetailsDto;
@@ -26,6 +28,9 @@ import com.hcl.mortgage.repository.MortgageRepository;
 import com.hcl.mortgage.repository.TransactionRepository;
 import com.hcl.mortgage.util.MortgageConstants;
 
+/**
+ * @author Lakshmi
+ */
 @Service
 public class MortgageServiceImpl implements IMortgageService {
 
@@ -42,7 +47,16 @@ public class MortgageServiceImpl implements IMortgageService {
 
 	@Autowired
 	TransactionRepository transactionRepository;
+	
+	@Autowired
+	EmailSender emailSender;
 
+	/**
+	 * This method is intended for signup of the customer
+	 * 
+	 * @param MortgageDto
+	 * @return MortgageDetailsDto
+	 */
 	public MortgageDetailsDto signup(MortgageDto mortgageDto) {
 		LOGGER.debug("MortgageServiceImpl:createMortgage");
 
@@ -114,7 +128,16 @@ public class MortgageServiceImpl implements IMortgageService {
 						mortgageTransaction.setDescription("debited from  "+transactionalAccount.getAccountNumber());
 
 						transactionRepository.save(mortgageTransaction);
+						
+						String bodyMessage="Transactional Account Number: "+transactionalAccount.getAccountNumber()+"/n"+
+											"Mortgage Account Number: "+mortgageAccount.getAccountNumber()+"/n"+
+											"Login Id :"+customer.getLoginId()+"\n"+"Password :"+customer.getPassword();
 
+						emailSender.sendOtp("mplnarasimham@gmail.com", "accounnt details", bodyMessage);
+						mortgageDetailsDto.setTransactionAccountNumber(transactionalAccount.getAccountNumber());
+						mortgageDetailsDto.setMortgageAccountNumber(mortgageAccount.getAccountNumber());
+						mortgageDetailsDto.setLoginId(customer.getLoginId());
+						mortgageDetailsDto.setPassword(customer.getPassword());
 						mortgageDetailsDto.setStatusCode(201);
 						mortgageDetailsDto.setMessage(MortgageConstants.MORTGAGE_APPROVED_MESSAGE);
 
@@ -135,7 +158,74 @@ public class MortgageServiceImpl implements IMortgageService {
 			throw new MortgageException(MortgageConstants.PROPERTY_COST_VALIDATION_MESSAGE);
 		}
 	}
+	/**
+	 * This method is intended for batch process for every 10sec
+	 * 
+	 */
+	public String batchProcess() {
+		List<Account> getAllAccounts = getAllAccounts();
+		if (!(getAllAccounts.isEmpty())) {
+			Integer previousCustomerId = 0;
+			Integer currentCustomerId = 0;
+			for (Account account : getAllAccounts) {
+				Integer customerId = account.getCustomerId();
+				currentCustomerId = customerId;
+				if (currentCustomerId != previousCustomerId) {
+					Account transactionalAccount = getAccount(customerId, MortgageConstants.TRANSACTION_ACCOUNT);
+					Account mortgageAccount = getAccount(customerId, MortgageConstants.MORTGAGE_ACCOUNT);
+					if (transactionalAccount.getBalance() >= 200) {
+						if (mortgageAccount.getBalance() < 0) {
+							Double transactionalAccountBalance = transactionalAccount.getBalance() - 200;
+							Double mortgageAccountBalance = mortgageAccount.getBalance() + 200;
+							transactionalAccount.setBalance(transactionalAccountBalance);
+							mortgageAccount.setBalance(mortgageAccountBalance);
+							accountRepository.save(transactionalAccount);
+							accountRepository.save(mortgageAccount);
 
+							Transaction transactionInTransactional = new Transaction();
+							Transaction transactionInMortgage = new Transaction();
+
+							transactionInTransactional.setAccountNumber(transactionalAccount.getAccountNumber());
+							transactionInTransactional.setAmount(200d);
+							transactionInTransactional.setTransactionDate(LocalDateTime.now());
+							transactionInTransactional.setTransactionType(MortgageConstants.DEBIT);
+							transactionInTransactional.setDescription("debited from "+transactionalAccount.getAccountNumber());
+
+							transactionInMortgage.setAccountNumber(mortgageAccount.getAccountNumber());
+							transactionInMortgage.setAmount(200d);
+							transactionInMortgage.setTransactionDate(LocalDateTime.now());
+							transactionInMortgage.setTransactionType(MortgageConstants.CREDIT);
+							transactionInMortgage.setDescription("credited to "+transactionalAccount.getAccountNumber());
+
+							transactionRepository.save(transactionInTransactional);
+							transactionRepository.save(transactionInMortgage);
+
+							previousCustomerId = currentCustomerId;
+						}
+					}
+				}
+			}
+
+			return MortgageConstants.BATCH_MONTHLY_SUCCESS_MESSAGE;
+		} else {
+			return MortgageConstants.BATCH_MONTHLY_FAILED_MESSAGE;
+		}
+	}
+
+	public List<Account> getAllAccounts() {
+		List<Account> accounts = accountRepository.findAll();
+		return accounts;
+	}
+	public Account getAccount(Integer customerId, String accountType) {
+		Account account = accountRepository.findByCustomerIdAndAccountType(customerId, accountType);
+		return account;
+
+	}
+	@Scheduled(fixedRate =10000)
+	public void testSchedule() {
+		batchProcess();
+	}
+	
 	static boolean validPhoneNumber(Long number) {
 		String num = number.toString();
 		Pattern p = Pattern.compile("^[0-9]{10}$");
