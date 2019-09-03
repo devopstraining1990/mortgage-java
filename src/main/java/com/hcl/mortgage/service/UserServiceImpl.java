@@ -35,8 +35,7 @@ public class UserServiceImpl implements UserService {
 	public LoginDetailsDto login(LoginDto loginDto) {
 		LOGGER.debug("UserServiceImpl login()");
 		LoginDetailsDto loginResponseDto = null;
-		// Base64.Encoder encoder = Base64.getEncoder();
-		// String password = encoder.encodeToString(loginDto.getPassword().getBytes());
+		
 
 		List<Customer> customer = customerRepository.findByLoginIdAndPassword(loginDto.getLoginId(),
 				loginDto.getPassword());

@@ -12,8 +12,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
+
 public class MortgageDto implements Serializable{
 	
 	private static final long serialVersionUID = 1469147933944989068L;
