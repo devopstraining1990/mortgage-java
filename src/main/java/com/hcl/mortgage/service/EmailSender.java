@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 public class EmailSender {
 	
 	public static final Logger LOGGER = LoggerFactory.getLogger(EmailSender.class);
-//	@Autowired
-//	JavaMailSender mailSender;
+
 	private JavaMailSender javaMailSender;
 
 	
