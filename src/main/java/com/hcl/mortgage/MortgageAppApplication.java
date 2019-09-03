@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class MortgageAppApplication {
+public class MortgageAppApplication { 
 
 	public static void main(String[] args) {
 		SpringApplication.run(MortgageAppApplication.class, args);
