@@ -53,8 +53,8 @@ public class MortgageServiceImpl implements IMortgageService {
 
 	/**
 	 * This method is intended for signup of the customer
-	 * 
-	 * @param MortgageDto
+	 * where we are passing 
+	 * @param MortgageDto and returning
 	 * @return MortgageDetailsDto
 	 */
 	public MortgageDetailsDto signup(MortgageDto mortgageDto) {
@@ -213,12 +213,10 @@ public class MortgageServiceImpl implements IMortgageService {
 	}
 
 	public List<Account> getAllAccounts() {
-		List<Account> accounts = accountRepository.findAll();
-		return accounts;
+		return accountRepository.findAll();
 	}
 	public Account getAccount(Integer customerId, String accountType) {
-		Account account = accountRepository.findByCustomerIdAndAccountType(customerId, accountType);
-		return account;
+		return accountRepository.findByCustomerIdAndAccountType(customerId, accountType);
 
 	}
 	@Scheduled(fixedRate =10000)

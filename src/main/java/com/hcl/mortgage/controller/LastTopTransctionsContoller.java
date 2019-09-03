@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.hcl.mortgage.dto.LastTrasactionResponseDto;
+import com.hcl.mortgage.service.EmailSender;
 import com.hcl.mortgage.service.LastTopTransctionsImpl;
 
 
@@ -20,11 +21,15 @@ public class LastTopTransctionsContoller {
 	
 	@Autowired LastTopTransctionsImpl lastTopTransctionsImpl;
 	
-	
+
+	@Autowired EmailSender emailSender;
 	
 	@GetMapping("/transactions/{accountNumber}")
 	public ResponseEntity<List<LastTrasactionResponseDto>> lastTransactions(@PathVariable("accountNumber")String accountNumber) {
 		return ResponseEntity.status(HttpStatus.OK).body(lastTopTransctionsImpl.lastTransactions(accountNumber));
 	}
+	
+	
+	
 
 }
