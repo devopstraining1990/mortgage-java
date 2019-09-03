@@ -24,7 +24,7 @@ public class AccountSummaryServiceImplTest {
 
 	@Mock
 	AccountRepository accountRepository;
-
+ 
 	@InjectMocks
 	AccountSummaryServiceImpl accountSummaryServiceImpl;
 

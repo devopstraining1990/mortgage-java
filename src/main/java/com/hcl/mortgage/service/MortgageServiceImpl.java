@@ -163,19 +163,21 @@ public class MortgageServiceImpl implements IMortgageService {
 	 * 
 	 */
 	public String batchProcess() {
+		
+		LOGGER.info("batch process time:{}",LocalDateTime.now());
 		List<Account> getAllAccounts = getAllAccounts();
 		if (!(getAllAccounts.isEmpty())) {
 			Integer previousCustomerId = 0;
 			Integer currentCustomerId = 0;
-			for (Account account : getAllAccounts) {
-				Integer customerId = account.getCustomerId();
-				currentCustomerId = customerId;
-				if (currentCustomerId.equals(previousCustomerId)) {
+			for (Account account : getAllAccounts) { 
+				Integer customerId = account.getCustomerId(); 
+				currentCustomerId = customerId; 
+				if (!currentCustomerId.equals(previousCustomerId)) {
 					Account transactionalAccount = getAccount(customerId, MortgageConstants.TRANSACTION_ACCOUNT);
 					Account mortgageAccount = getAccount(customerId, MortgageConstants.MORTGAGE_ACCOUNT);
 					if (transactionalAccount.getBalance() >= 200) {
 						if (mortgageAccount.getBalance() < 0) {
-							Double transactionalAccountBalance = transactionalAccount.getBalance() - 200;
+					 		Double transactionalAccountBalance = transactionalAccount.getBalance() - 200;
 							Double mortgageAccountBalance = mortgageAccount.getBalance() + 200;
 							transactionalAccount.setBalance(transactionalAccountBalance);
 							mortgageAccount.setBalance(mortgageAccountBalance);
@@ -227,7 +229,7 @@ public class MortgageServiceImpl implements IMortgageService {
 	static boolean validPhoneNumber(Long number) {
 		String num = number.toString();
 		Pattern p = Pattern.compile("^[0-9]{10}$");
-		Matcher m = p.matcher(num);
+		Matcher m = p.matcher(num); 
 		return (m.find() && m.group().equals(num));
 	}
 
