@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 	 * @param LoginDto
 	 * @return LoginDetailsDto
 	 */
-	public LoginDetailsDto login(LoginDto loginDto) {
+	public LoginDetailsDto login(LoginDto loginDto) { 
 		LOGGER.debug("UserServiceImpl login()");
 		LoginDetailsDto loginResponseDto = null;
 		// Base64.Encoder encoder = Base64.getEncoder();
