@@ -20,6 +20,6 @@ public final class MortgageConstants {
 	public static final String MORTGAGE_ACCOUNT_SUFFIX = "MORT";
 	public static final String BATCH_MONTHLY_SUCCESS_MESSAGE = "Monthly Batch Updated Successfully.";
 	public static final String BATCH_MONTHLY_FAILED_MESSAGE = "Batch Failed";
-	public static final String LOGIN_FAILURE = "Login Failed.";
-	public static final String LOGIN_SUCCESS = "Login Success.";
+	public static final String LOGIN_FAILURE = "Please enter allthe valid username or password";
+	public static final String LOGIN_SUCCESS = "Successfully logged in";
 }
