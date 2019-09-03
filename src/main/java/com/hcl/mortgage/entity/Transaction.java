@@ -17,11 +17,10 @@ public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer transactionId;
-	private Long accountNumber;
+	private String accountNumber;
 	private LocalDateTime transactionDate;
 	private String transactionType;
 	private Double amount;
 	private String description;
-	private Integer accountId;
 
 }

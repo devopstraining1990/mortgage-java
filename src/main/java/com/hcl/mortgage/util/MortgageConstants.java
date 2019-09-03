@@ -1,21 +1,23 @@
 package com.hcl.mortgage.util;
-
-public class MortgageConstants {
-
+public final class MortgageConstants {
+	
 	private MortgageConstants() {
-
+		
 	}
-
-	public static final String ALREADY_REGISTERED = "You are already registered.";
-	public static final String PARKING_SLOT_NOT_AVAIABLE = "Parking slot not available in future we will update.";
-	public static final String SUCCESS_VIP = "Reggistered successfully and allocated parking slot.";
-	public static final String SUCCESS_EMPLOYEE = "Reggistered successfully";
-	public static final String LOGIN_SUCCESS = "Logged in Successfully";
-	public static final String LOGIN_FAILURE = "Login failure";
-	public static final String ROLE = "Role is not present";
-	public static final String SLOT_REQUEST = "Please select tommorow or other dates not today";
-	public static final String SLOT_REQUEST_SUCCESS = "Slot requested successfully";
-	public static final String PENDING = "pending";
-	public static final String SLOT_REQUEST_USER_ALREADY = "You are already requested for this date";
-
+	public static final String MORTGAGE_APPROVED_MESSAGE = "Congratulations, your mortgage has been granted.";
+	public static final String CUSTOMER_AGE_MINIMUM_MESSAGE = "You are not eligible for this Loan age should be >18";
+	public static final String EMAIL_VALIDATION_MESSAGE = "Please Enter Valid Email and Email Conform Email Should be Same.";
+	public static final String PHONE_VALIDATION_MESSAGE = "Please Enter Valid Phone Number.";
+	public static final String NAMES_VALIDATION_MESSAGE = "FirstName or MiddleName or SurName Mut and sshould be alphabhets.";
+	public static final String PROPERTY_COST_VALIDATION_MESSAGE = "Property Cost Minimum 1000000 or Deposit should Not be an Negative amount.";
+	public static final String CUSTOMER_NOT_FOUND_MESSAGE = "Invlid username or password";
+	public static final String TRANSACTION_ACCOUNT = "Transactional Account";
+	public static final String MORTGAGE_ACCOUNT = "Mortgage Account";
+	public static final String DEBIT = "debit";
+	public static final String CREDIT = "credit";
+	public static final String DATE_FORMAT = "yyyy-MM-dd";
+	public static final String TRANSACTIONAL_ACCOUNT_SUFFIX = "ACC";
+	public static final String MORTGAGE_ACCOUNT_SUFFIX = "MORT";
+	public static final String BATCH_MONTHLY_SUCCESS_MESSAGE = "Monthly Batch Updated Successfully.";
+	public static final String BATCH_MONTHLY_FAILED_MESSAGE = "Batch Failed";
 }
