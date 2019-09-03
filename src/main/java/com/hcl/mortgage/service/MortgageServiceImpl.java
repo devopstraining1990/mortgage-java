@@ -52,7 +52,7 @@ public class MortgageServiceImpl implements IMortgageService {
 	EmailSender emailSender;
 
 	Random random = new Random();
-	
+
 	/**
 	 * This method is intended for signup of the customer where we are passing
 	 * 
@@ -135,7 +135,7 @@ public class MortgageServiceImpl implements IMortgageService {
 								+ "/n" + "Mortgage Account Number: " + mortgageAccount.getAccountNumber() + "/n"
 								+ "Login Id :" + customer.getLoginId() + "\n" + "Password :" + customer.getPassword();
 
-						emailSender.sendOtp("mplnarasimham@gmail.com", "accounnt details", bodyMessage);
+						emailSender.sendOtp(mortgageDto.getEmail(), "accounnt details", bodyMessage);
 						mortgageDetailsDto.setTransactionAccountNumber(transactionalAccount.getAccountNumber());
 						mortgageDetailsDto.setMortgageAccountNumber(mortgageAccount.getAccountNumber());
 						mortgageDetailsDto.setLoginId(customer.getLoginId());
@@ -166,49 +166,46 @@ public class MortgageServiceImpl implements IMortgageService {
 	 * 
 	 */
 	public String batchProcess() {
-		
-		LOGGER.info("batch process time:{}",LocalDateTime.now());
+
+		LOGGER.info("batch process time:{}", LocalDateTime.now());
 		List<Account> getAllAccounts = getAllAccounts();
 		if (!(getAllAccounts.isEmpty())) {
 			Integer previousCustomerId = 0;
 			Integer currentCustomerId = 0;
-			for (Account account : getAllAccounts) { 
-				Integer customerId = account.getCustomerId(); 
-				currentCustomerId = customerId; 
+			for (Account account : getAllAccounts) {
+				Integer customerId = account.getCustomerId();
+				currentCustomerId = customerId;
 				if (!currentCustomerId.equals(previousCustomerId)) {
 					Account transactionalAccount = getAccount(customerId, MortgageConstants.TRANSACTION_ACCOUNT);
 					Account mortgageAccount = getAccount(customerId, MortgageConstants.MORTGAGE_ACCOUNT);
-					if (transactionalAccount.getBalance() >= 200) {
-						if (mortgageAccount.getBalance() < 0) {
-					 		Double transactionalAccountBalance = transactionalAccount.getBalance() - 200;
-							Double mortgageAccountBalance = mortgageAccount.getBalance() + 200;
-							transactionalAccount.setBalance(transactionalAccountBalance);
-							mortgageAccount.setBalance(mortgageAccountBalance);
-							accountRepository.save(transactionalAccount);
-							accountRepository.save(mortgageAccount);
+					if (transactionalAccount.getBalance() >= 200 || mortgageAccount.getBalance() < 0) {
+						Double transactionalAccountBalance = transactionalAccount.getBalance() - 200;
+						Double mortgageAccountBalance = mortgageAccount.getBalance() + 200;
+						transactionalAccount.setBalance(transactionalAccountBalance);
+						mortgageAccount.setBalance(mortgageAccountBalance);
+						accountRepository.save(transactionalAccount);
+						accountRepository.save(mortgageAccount);
 
-							Transaction transactionInTransactional = new Transaction();
-							Transaction transactionInMortgage = new Transaction();
+						Transaction transactionInTransactional = new Transaction();
+						Transaction transactionInMortgage = new Transaction();
 
-							transactionInTransactional.setAccountNumber(transactionalAccount.getAccountNumber());
-							transactionInTransactional.setAmount(200d);
-							transactionInTransactional.setTransactionDate(LocalDateTime.now());
-							transactionInTransactional.setTransactionType(MortgageConstants.DEBIT);
-							transactionInTransactional
-									.setDescription("debited from " + transactionalAccount.getAccountNumber());
+						transactionInTransactional.setAccountNumber(transactionalAccount.getAccountNumber());
+						transactionInTransactional.setAmount(200d);
+						transactionInTransactional.setTransactionDate(LocalDateTime.now());
+						transactionInTransactional.setTransactionType(MortgageConstants.DEBIT);
+						transactionInTransactional
+								.setDescription("debited from " + transactionalAccount.getAccountNumber());
 
-							transactionInMortgage.setAccountNumber(mortgageAccount.getAccountNumber());
-							transactionInMortgage.setAmount(200d);
-							transactionInMortgage.setTransactionDate(LocalDateTime.now());
-							transactionInMortgage.setTransactionType(MortgageConstants.CREDIT);
-							transactionInMortgage
-									.setDescription("credited to " + transactionalAccount.getAccountNumber());
+						transactionInMortgage.setAccountNumber(mortgageAccount.getAccountNumber());
+						transactionInMortgage.setAmount(200d);
+						transactionInMortgage.setTransactionDate(LocalDateTime.now());
+						transactionInMortgage.setTransactionType(MortgageConstants.CREDIT);
+						transactionInMortgage.setDescription("credited to " + transactionalAccount.getAccountNumber());
 
-							transactionRepository.save(transactionInTransactional);
-							transactionRepository.save(transactionInMortgage);
+						transactionRepository.save(transactionInTransactional);
+						transactionRepository.save(transactionInMortgage);
 
-							previousCustomerId = currentCustomerId;
-						}
+						previousCustomerId = currentCustomerId;
 					}
 				}
 			}
@@ -236,7 +233,7 @@ public class MortgageServiceImpl implements IMortgageService {
 	static boolean validPhoneNumber(Long number) {
 		String num = number.toString();
 		Pattern p = Pattern.compile("^[0-9]{10}$");
-		Matcher m = p.matcher(num); 
+		Matcher m = p.matcher(num);
 		return (m.find() && m.group().equals(num));
 	}
 
