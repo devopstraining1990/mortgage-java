@@ -28,7 +28,7 @@ public class Mortgage {
 	private String title;
 	private String firstName;
 	private String lastName;
-	private String surName;
+	
 	private LocalDate dob;
 	private Long phoneNumber;
 	private String email;
