@@ -18,7 +18,7 @@ public class Account {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer accountId;
-	private Long accountNumber;
+	private String accountNumber;
 	private String accountType;
 	private Double balance;
 	private LocalDate createdDate;
