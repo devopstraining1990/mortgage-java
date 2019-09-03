@@ -170,7 +170,7 @@ public class MortgageServiceImpl implements IMortgageService {
 			for (Account account : getAllAccounts) {
 				Integer customerId = account.getCustomerId();
 				currentCustomerId = customerId;
-				if (currentCustomerId != previousCustomerId) {
+				if (currentCustomerId.equals(previousCustomerId)) {
 					Account transactionalAccount = getAccount(customerId, MortgageConstants.TRANSACTION_ACCOUNT);
 					Account mortgageAccount = getAccount(customerId, MortgageConstants.MORTGAGE_ACCOUNT);
 					if (transactionalAccount.getBalance() >= 200) {
