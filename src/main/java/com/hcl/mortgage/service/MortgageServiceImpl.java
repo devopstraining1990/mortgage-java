@@ -77,7 +77,7 @@ public class MortgageServiceImpl implements IMortgageService {
 
 						mortgage = new Mortgage();
 						customer = new Customer();
-						transaction = new Transaction();
+						transaction = new Transaction(); 
 						mortgageTransaction = new Transaction();
 						mortgageDetailsDto = new MortgageDetailsDto();
 						Random random = new Random();
