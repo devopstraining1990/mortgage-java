@@ -225,7 +225,7 @@ public class MortgageServiceImpl implements IMortgageService {
 
 	}
 
-	@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 60000)
 	public void testSchedule() {
 		batchProcess();
 	}
