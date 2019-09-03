@@ -37,7 +37,7 @@ public class LastTopTransctionsImplTest {
 		transaction.setTransactionId(1);
 		transaction.setTransactionType("debit");
 		
-		transactionList=new ArrayList<>();
+		transactionList=new ArrayList<>(); 
 		transactionList.add(transaction);
 		
 	}

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.hcl.mortgage.dto.AccountSummaryResponse;
 import com.hcl.mortgage.entity.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {

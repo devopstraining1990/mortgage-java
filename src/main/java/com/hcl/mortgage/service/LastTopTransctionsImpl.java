@@ -14,12 +14,23 @@ import com.hcl.mortgage.entity.Transaction;
 import com.hcl.mortgage.repository.TransactionRepository;
 
 
+/**
+ * @author sairam
+ * 
+ * **/
+
 @Service
 public class LastTopTransctionsImpl implements LastTopTransctions {
 
 	@Autowired
 	TransactionRepository transactionRepository;
 
+	/**
+	 * @author sairam
+	 * get the list of transactions of account
+	 * @param accountNumber is the running work
+	 * 
+	 * **/
 	@Override
 	public List<LastTrasactionResponseDto> lastTransactions(String accountNumber) {
 
@@ -34,8 +45,10 @@ public class LastTopTransctionsImpl implements LastTopTransctions {
 		List<LastTrasactionResponseDto> lastTrasactionResponseDtoList=new ArrayList<>();
 		
 		
+		int tarnsactionsCount=0;
+		
 		for (Transaction transaction : sortedList) {
-			
+			if(tarnsactionsCount<5) {
 			LastTrasactionResponseDto lastTrasactionResponseDto = new LastTrasactionResponseDto();
 			
 			lastTrasactionResponseDto.setAccountNumber(transaction.getAccountNumber());
@@ -45,8 +58,11 @@ public class LastTopTransctionsImpl implements LastTopTransctions {
 			lastTrasactionResponseDto.setTransactionType(transaction.getTransactionType());
 			
 			lastTrasactionResponseDtoList.add(lastTrasactionResponseDto);
+			}
+			
+			tarnsactionsCount++;
 		}
-		return lastTrasactionResponseDtoList;
+		return lastTrasactionResponseDtoList; 
 
 	}
 

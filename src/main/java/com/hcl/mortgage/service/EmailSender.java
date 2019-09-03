@@ -13,8 +13,15 @@ import org.springframework.stereotype.Component;
 public class EmailSender {
 	
 	public static final Logger LOGGER = LoggerFactory.getLogger(EmailSender.class);
+//	@Autowired
+//	JavaMailSender mailSender;
+	private JavaMailSender javaMailSender;
+
+	
 	@Autowired
-	JavaMailSender mailSender;
+	public EmailSender(JavaMailSender javaMailSender) {
+	 this.javaMailSender = javaMailSender;
+	}
 
 	public String sendOtp(String mailId, String headMessage, String bodyMessage) {
 
@@ -23,14 +30,14 @@ public class EmailSender {
 		String returnString = "Email sent sucess";
 		try {
 
-			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessage message = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message);
 
 			helper.setTo(mailId);
 			helper.setSubject(headMessage);
 			helper.setText(bodyMessage);
-
-			mailSender.send(message);
+ 
+			javaMailSender.send(message); 
 
 		} catch (Exception e) {
 			returnString = "Mail failed";
