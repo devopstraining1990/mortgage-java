@@ -44,13 +44,15 @@ public class UserServiceImpl implements UserService {
 		if (customer.isEmpty()) {
 			loginResponseDto = new LoginDetailsDto();
 			loginResponseDto.setStatusCode(401);
-			loginResponseDto.setMessage(MortgageConstants.LOGIN_FAILURE);
+			loginResponseDto.setMessage("incorrect credintilas");
+//			loginResponseDto.setMessage(MortgageConstants.LOGIN_FAILURE);
 		} else {
 			Customer customers = customer.get(0);
 			loginResponseDto = new LoginDetailsDto();
 			loginResponseDto.setCustomerId(customers.getCustomerId());
 			loginResponseDto.setStatusCode(200);
-			loginResponseDto.setMessage(MortgageConstants.LOGIN_SUCCESS);
+			loginResponseDto.setMessage("login succsess");
+//			loginResponseDto.setMessage(MortgageConstants.LOGIN_SUCCESS);
 
 		}
 		return loginResponseDto;
