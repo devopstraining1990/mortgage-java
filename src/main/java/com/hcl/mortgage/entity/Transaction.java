@@ -22,6 +22,5 @@ public class Transaction {
 	private String transactionType;
 	private Double amount;
 	private String description;
-	private Integer accountId;
 
 }

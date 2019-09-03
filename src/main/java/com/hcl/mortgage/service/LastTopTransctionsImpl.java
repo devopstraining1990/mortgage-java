@@ -22,7 +22,10 @@ public class LastTopTransctionsImpl implements LastTopTransctions {
 
 		List<Transaction> transactions = transactionRepository.findByAccountNumber(accountNumber);
 
+		
+		
 		List<LastTrasactionResponseDto> lastTrasactionResponseDtoList=new ArrayList<>();
+		
 		
 		for (Transaction transaction : transactions) {
 			
