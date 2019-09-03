@@ -23,7 +23,7 @@ public class Mortgage {
 	private Double deposit;
 	private String employmentStatus;
 	private String occupation;
-	private Double salary;
+	
 	private String title;
 	private String firstName;
 	private String lastName;
