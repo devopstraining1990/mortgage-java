@@ -15,6 +15,9 @@ import com.hcl.mortgage.dto.MortgageDto;
 import com.hcl.mortgage.service.IMortgageService;
 import com.hcl.mortgage.service.MortgageServiceImpl;
 
+/**
+ * @author Lakshmi
+ */
 @RestController
 @CrossOrigin(origins = { "*", "*/" }, allowedHeaders = { "*", "*/" })
 public class MortgageController {
@@ -24,12 +27,16 @@ public class MortgageController {
 	@Autowired
 	IMortgageService mortgageService;
 	
+	/**
+	 * This method is intended for signup of the customer
+	 * 
+	 * @param MortgageDto
+	 * @return MortgageDetailsDto
+	 */
 	@PostMapping("/mortgageSignup")
 	public ResponseEntity<MortgageDetailsDto> signup(@RequestBody MortgageDto mortgageDto){
 		LOGGER.debug("MortgageController:createMortgage");
 		MortgageDetailsDto response = mortgageService.signup(mortgageDto);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
-	
-	
 }

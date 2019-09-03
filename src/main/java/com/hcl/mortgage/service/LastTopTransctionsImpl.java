@@ -33,6 +33,7 @@ public class LastTopTransctionsImpl implements LastTopTransctions {
 		
 		List<LastTrasactionResponseDto> lastTrasactionResponseDtoList=new ArrayList<>();
 		
+		
 		for (Transaction transaction : sortedList) {
 			
 			LastTrasactionResponseDto lastTrasactionResponseDto = new LastTrasactionResponseDto();
