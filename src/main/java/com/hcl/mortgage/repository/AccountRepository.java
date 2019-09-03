@@ -10,6 +10,6 @@ import com.hcl.mortgage.entity.Account;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 	
 	
-	public List<AccountSummaryResponse> findByCustomerId(Integer customerId);
+	public List<Account> findByCustomerId(Integer customerId);
 
 }

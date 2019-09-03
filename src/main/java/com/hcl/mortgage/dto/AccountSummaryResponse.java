@@ -9,7 +9,7 @@ public class AccountSummaryResponse {
 	
 	
 	private Integer accountId;
-	private Integer accountNumber;
+	private String accountNumber;
 	private Double balance;
 	private String accountType;
 
