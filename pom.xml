@@ -21,6 +21,11 @@
 
 	<dependencies>
 		<dependency>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <version>3.1.2</version>
+</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
@@ -90,7 +95,7 @@
 <distributionManagement>
   <snapshotRepository>
     <id>nexus</id>
-    <url>http://3.236.13.213:8081/nexus/content/repositories/snapshots</url>
+    <url>http://3.235.191.221:8081/nexus/content/repositories/snapshots</url>
   </snapshotRepository>
 </distributionManagement>
 
@@ -120,6 +125,15 @@
 					</execution>
 				</executions>
 			</plugin>
+				<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <configuration>
+                <testFailureIgnore>true</testFailureIgnore>
+                <shutdown>kill</shutdown> <!-- Use it if required-->
+                </configuration>
+            </plugin>
 
 		</plugins>
 	</build>
