@@ -87,6 +87,12 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 	</dependencies>
+	<distributionManagement>
+  <repository>
+    <id>nexus</id>
+    <url>http://3.235.191.221:8081/nexus/content/repositories/releases</url>
+  </repository>
+</distributionManagement>
 
 	<build>
 		<plugins>
